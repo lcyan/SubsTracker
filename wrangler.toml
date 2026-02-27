@@ -3,11 +3,18 @@ main = "src/index.js"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+workers_dev = false
+preview_urls = false
+
 [env.production]
 name = "subscription-manager"
+workers_dev = false
+preview_urls = false
 
 [env.staging]
 name = "subscription-manager-staging"
+workers_dev = true
+preview_urls = true
 
 # KV 命名空间配置（开源模板不预设固定 ID）
 # 部署后请在 Cloudflare 控制台创建并绑定：SUBSCRIPTIONS_KV
@@ -19,3 +26,7 @@ crons = ["0 * * * *"]
 # 环境变量（可选，也可以在 Cloudflare Dashboard 中设置）
 [vars]
 ENVIRONMENT = "production"
+
+[observability]
+enabled = false
+head_sampling_rate = 1
