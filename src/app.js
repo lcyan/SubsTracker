@@ -23,7 +23,7 @@ import { getUserFromRequest } from './api/handlers/auth.js';
 import { ensureMigrations } from './data/migrate.js';
 
 /**
- * @typedef {{ SUBSCRIPTIONS_KV: KVNamespace }} Bindings
+ * @typedef {{ SUBSCRIPTIONS_KV: KVNamespace, ASSETS: Fetcher }} Bindings
  */
 
 /** @type {Hono<{ Bindings: Bindings }>} */
@@ -65,6 +65,14 @@ app.get('/', async (c) => {
   const { user } = await getUserFromRequest(c.req.raw, c.env);
   if (user) return c.redirect('/admin');
   return handleLoginPage();
+});
+
+// 显式转发 favicon，避免被兜底页面路由截获。
+app.get('/favicon.ico', async (c) => {
+  if (!c.env.ASSETS) {
+    return c.notFound();
+  }
+  return c.env.ASSETS.fetch(c.req.raw);
 });
 
 // ─────────────────────────────────────────────────────────────

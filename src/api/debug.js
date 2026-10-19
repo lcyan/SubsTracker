@@ -81,6 +81,7 @@ async function handleDebug(request, env) {
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <title>调试信息 - SubsTracker</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace; padding: 20px; background: #f5f5f5; color: #333; }
